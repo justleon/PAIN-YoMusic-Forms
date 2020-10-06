@@ -41,5 +41,10 @@ namespace PAIN_YoMusic_Forms
         {
             this.LayoutMdi(MdiLayout.TileHorizontal);
         }
+
+        private void tileVerticallyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.LayoutMdi(MdiLayout.TileVertical);
+        }
     }
 }

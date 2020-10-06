@@ -29,18 +29,88 @@
         private void InitializeComponent()
         {
             this.listView = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.menuStripList = new System.Windows.Forms.MenuStrip();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStripList.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView
             // 
+            this.listView.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
             this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView.HideSelection = false;
+            this.listView.HoverSelection = true;
             this.listView.Location = new System.Drawing.Point(0, 0);
+            this.listView.MultiSelect = false;
             this.listView.Name = "listView";
             this.listView.Size = new System.Drawing.Size(584, 411);
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
-            this.listView.View = System.Windows.Forms.View.List;
+            this.listView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Title";
+            this.columnHeader1.Width = 219;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Author";
+            this.columnHeader2.Width = 146;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Date of release";
+            this.columnHeader3.Width = 101;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Genre";
+            this.columnHeader4.Width = 112;
+            // 
+            // menuStripList
+            // 
+            this.menuStripList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.deleteToolStripMenuItem,
+            this.modifyToolStripMenuItem});
+            this.menuStripList.Location = new System.Drawing.Point(0, 0);
+            this.menuStripList.Name = "menuStripList";
+            this.menuStripList.Size = new System.Drawing.Size(584, 24);
+            this.menuStripList.TabIndex = 1;
+            this.menuStripList.Text = "menuStrip1";
+            this.menuStripList.Visible = false;
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.addToolStripMenuItem.Text = "Add";
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // modifyToolStripMenuItem
+            // 
+            this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.modifyToolStripMenuItem.Text = "Modify";
             // 
             // SongListForm
             // 
@@ -48,15 +118,30 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 411);
             this.Controls.Add(this.listView);
+            this.Controls.Add(this.menuStripList);
+            this.MainMenuStrip = this.menuStripList;
             this.Name = "SongListForm";
             this.Text = "List View";
+            this.Activated += new System.EventHandler(this.SongListForm_Activated);
+            this.Deactivate += new System.EventHandler(this.SongListForm_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.check_form_closure);
+            this.menuStripList.ResumeLayout(false);
+            this.menuStripList.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.ListView listView;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.MenuStrip menuStripList;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modifyToolStripMenuItem;
     }
 }
