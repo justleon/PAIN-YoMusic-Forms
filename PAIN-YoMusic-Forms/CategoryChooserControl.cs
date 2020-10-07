@@ -40,13 +40,6 @@ namespace PAIN_YoMusic_Forms
             this.Click += CategoryChooserControl_Click;
         }
 
-        /*public CategoryChooserControl(Categories category)
-        {
-            categoryChosen = category;
-            this.Image = imageArray[(int)category];
-            this.Click += CategoryChooserControl_Click;
-        }*/
-
         public override string ToString()
         {
             return categoryChosen.ToString();

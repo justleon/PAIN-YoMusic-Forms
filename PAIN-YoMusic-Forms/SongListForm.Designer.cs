@@ -50,7 +50,6 @@
             this.columnHeader4});
             this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView.HideSelection = false;
-            this.listView.HoverSelection = true;
             this.listView.Location = new System.Drawing.Point(0, 0);
             this.listView.MultiSelect = false;
             this.listView.Name = "listView";
@@ -58,6 +57,8 @@
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
+            this.listView.ItemActivate += new System.EventHandler(this.listView_ItemActivate);
+            this.listView.SelectedIndexChanged += new System.EventHandler(this.listView_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -101,6 +102,7 @@
             // 
             // deleteToolStripMenuItem
             // 
+            this.deleteToolStripMenuItem.Enabled = false;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.deleteToolStripMenuItem.Text = "Delete";
@@ -108,6 +110,7 @@
             // 
             // modifyToolStripMenuItem
             // 
+            this.modifyToolStripMenuItem.Enabled = false;
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
             this.modifyToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.modifyToolStripMenuItem.Text = "Modify";
@@ -125,6 +128,7 @@
             this.Activated += new System.EventHandler(this.SongListForm_Activated);
             this.Deactivate += new System.EventHandler(this.SongListForm_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.check_form_closure);
+            this.Load += new System.EventHandler(this.SongListForm_Load);
             this.menuStripList.ResumeLayout(false);
             this.menuStripList.PerformLayout();
             this.ResumeLayout(false);

@@ -12,8 +12,8 @@ namespace PAIN_YoMusic_Forms
 {
     public partial class MainForm : Form
     {
-        public List<SongListForm> viewList = new List<SongListForm>();
-        public List<Song> songList = new List<Song>();
+        private List<SongListForm> viewList = new List<SongListForm>();
+        private List<Song> songList = new List<Song>();
 
         public MainForm()
         {
@@ -29,6 +29,12 @@ namespace PAIN_YoMusic_Forms
             this.LayoutMdi(MdiLayout.TileHorizontal);
         }
 
+        public void AddNewSongToList(Song song) { songList.Add(song); }
+
+        public int GetOpenViews() { return this.viewList.Count; }
+        
+        public void RemoveView(SongListForm songList) { this.viewList.Remove(songList); }
+
         private void optionNew_Click(object sender, EventArgs e)
         {
             SongListForm newMdiWindow = new SongListForm(this, songList);
@@ -37,12 +43,21 @@ namespace PAIN_YoMusic_Forms
             newMdiWindow.Show();
         }
 
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure to exit the program?", "Exit", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                this.Close();
+                Application.Exit();
+            }
+        }
+
         private void optionTileHorizontally_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(MdiLayout.TileHorizontal);
         }
 
-        private void tileVerticallyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void optionTileVertically_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(MdiLayout.TileVertical);
         }

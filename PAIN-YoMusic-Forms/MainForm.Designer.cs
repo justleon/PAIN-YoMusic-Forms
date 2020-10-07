@@ -32,6 +32,7 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arrangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileHorizontallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tileVerticallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +57,8 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem});
+            this.newToolStripMenuItem,
+            this.exitToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "&View";
@@ -67,6 +69,13 @@
             this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.optionNew_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Text = "Exit Program";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // arrangeToolStripMenuItem
             // 
@@ -89,7 +98,7 @@
             this.tileVerticallyToolStripMenuItem.Name = "tileVerticallyToolStripMenuItem";
             this.tileVerticallyToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.tileVerticallyToolStripMenuItem.Text = "Tile Vertically";
-            this.tileVerticallyToolStripMenuItem.Click += new System.EventHandler(this.tileVerticallyToolStripMenuItem_Click);
+            this.tileVerticallyToolStripMenuItem.Click += new System.EventHandler(this.optionTileVertically_Click);
             // 
             // statusStrip
             // 
@@ -140,6 +149,7 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolStripMenuItem tileVerticallyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 

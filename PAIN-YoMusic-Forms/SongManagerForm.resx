@@ -181,10 +181,7 @@
         WOpqZzubnO0QnGD6tWbgiX+nn/h5EDY5FyD4LOCfNVp/1nAOK1f7L7Q8yYRliqZqAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="errorTitleBox.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="errorPrompt.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
-  </metadata>
-  <metadata name="errorAuthorBox.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>138, 17</value>
   </metadata>
 </root>

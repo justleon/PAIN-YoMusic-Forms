@@ -39,11 +39,9 @@
             this.buttonAccept = new System.Windows.Forms.Button();
             this.categoryBox = new System.Windows.Forms.TextBox();
             this.categoryChooserControl = new PAIN_YoMusic_Forms.CategoryChooserControl();
-            this.errorTitleBox = new System.Windows.Forms.ErrorProvider(this.components);
-            this.errorAuthorBox = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorPrompt = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.categoryChooserControl)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorTitleBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorAuthorBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorPrompt)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -106,7 +104,7 @@
             // buttonAccept
             // 
             this.buttonAccept.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonAccept.Location = new System.Drawing.Point(155, 185);
+            this.buttonAccept.Location = new System.Drawing.Point(161, 185);
             this.buttonAccept.Name = "buttonAccept";
             this.buttonAccept.Size = new System.Drawing.Size(75, 23);
             this.buttonAccept.TabIndex = 4;
@@ -137,13 +135,9 @@
             this.categoryChooserControl.TabStop = false;
             this.categoryChooserControl.Click += new System.EventHandler(this.categoryChooserControl_Click);
             // 
-            // errorTitleBox
+            // errorPrompt
             // 
-            this.errorTitleBox.ContainerControl = this;
-            // 
-            // errorAuthorBox
-            // 
-            this.errorAuthorBox.ContainerControl = this;
+            this.errorPrompt.ContainerControl = this;
             // 
             // SongManagerForm
             // 
@@ -160,11 +154,11 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "SongManagerForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Manage Song";
             this.Load += new System.EventHandler(this.SongManagerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.categoryChooserControl)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorTitleBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorAuthorBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorPrompt)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -181,7 +175,6 @@
         private System.Windows.Forms.Button buttonAccept;
         private System.Windows.Forms.TextBox categoryBox;
         private CategoryChooserControl categoryChooserControl;
-        private System.Windows.Forms.ErrorProvider errorTitleBox;
-        private System.Windows.Forms.ErrorProvider errorAuthorBox;
+        private System.Windows.Forms.ErrorProvider errorPrompt;
     }
 }

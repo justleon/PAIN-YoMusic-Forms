@@ -30,19 +30,18 @@ namespace PAIN_YoMusic_Forms
                 dateBox.Text = song.dateTime;
                 categoryBox.Text = song.category;
 
-                switch ((int)categoryChooserControl.CategoryChosen)
+                switch (song.category)
                 {
-                    case 0:
-                        categoryChooserControl.Image = categoryChooserControl.imageArray[(int)Categories.Pop];
+                    case "Pop":
+                        categoryChooserControl.CategoryChosen = Categories.Pop;
                         break;
-                    case 1:
-                        categoryChooserControl.Image = categoryChooserControl.imageArray[(int)Categories.Rock];
+                    case "Rock":
+                        categoryChooserControl.CategoryChosen = Categories.Rock;
                         break;
-                    case 2:
-                        categoryChooserControl.Image = categoryChooserControl.imageArray[(int)Categories.Rap];
+                    case "Rap":
+                        categoryChooserControl.CategoryChosen = Categories.Rap;
                         break;
                 }
-                    
             }
         }
 
@@ -50,26 +49,6 @@ namespace PAIN_YoMusic_Forms
         {
             if (ValidateChildren())
                 DialogResult = DialogResult.OK;
-        }
-
-        public string GetTitle()
-        {
-            return titleBox.Text;
-        }
-
-        public string GetAuthor()
-        {
-            return authorBox.Text;
-        }
-
-        public string GetDate()
-        {
-            return dateBox.Text;
-        }
-
-        public string GetCategory()
-        {
-            return categoryBox.Text;
         }
 
         public string[] GetData()
@@ -88,13 +67,13 @@ namespace PAIN_YoMusic_Forms
             if (titleBox.Text.Equals(""))
             {
                 e.Cancel = true;
-                this.errorTitleBox.SetError(titleBox, "This field can't be empty!");
+                this.errorPrompt.SetError(titleBox, "This field can't be empty!");
             }
         }
 
         private void titleBox_Validated(object sender, EventArgs e)
         {
-            this.errorTitleBox.SetError(titleBox, "");
+            this.errorPrompt.SetError(titleBox, "");
         }
 
         private void authorBox_Validating(object sender, CancelEventArgs e)
@@ -102,13 +81,13 @@ namespace PAIN_YoMusic_Forms
             if (authorBox.Text.Equals(""))
             {
                 e.Cancel = true;
-                this.errorAuthorBox.SetError(authorBox, "This field can't be empty!");
+                this.errorPrompt.SetError(authorBox, "This field can't be empty!");
             }
         }
 
         private void authorBox_Validated(object sender, EventArgs e)
         {
-            this.errorAuthorBox.SetError(authorBox, "");
+            this.errorPrompt.SetError(authorBox, "");
         }
     }
 }
