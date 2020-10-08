@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,15 +26,7 @@ namespace PAIN_YoMusic_Forms
         {
             List<Song> songList = mainForm.GetSongList();
             if (songList.Count() != 0)
-            {
-                foreach (Song song in songList)
-                {
-                    string[] row = { song.title, song.author, song.dateTime, song.category };
-                    ListViewItem viewItem = new ListViewItem(row);
-                    viewItem.Tag = song;
-                    listView.Items.Add(viewItem);
-                }
-            }
+                LoadWholeList();
         }
 
         public void AddSongToTheView(Song song)
@@ -56,6 +49,33 @@ namespace PAIN_YoMusic_Forms
                     item.SubItems[3].Text = song.SubItems[3].Text;
                     break;
                 }
+            }
+        }
+
+        public void LoadWholeList()
+        {
+            foreach (Song song in mainForm.GetSongList())
+            {
+                string[] row = { song.title, song.author, song.dateTime, song.category };
+                ListViewItem viewItem = new ListViewItem(row);
+                viewItem.Tag = song;
+                listView.Items.Add(viewItem);
+            }
+        }
+
+        public void LoadFilteredList(bool beforeDate)
+        {
+            foreach(Song song in mainForm.GetSongList())
+            {
+                var date = DateTime.Parse(song.dateTime);
+
+                if ((date.Year < 2000 && beforeDate == false) || (date.Year >= 2000 && beforeDate))
+                    continue;
+
+                string[] row = { song.title, song.author, song.dateTime, song.category };
+                ListViewItem viewItem = new ListViewItem(row);
+                viewItem.Tag = song;
+                listView.Items.Add(viewItem);
             }
         }
 
@@ -106,8 +126,7 @@ namespace PAIN_YoMusic_Forms
         private void modifyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ListViewItem modifiedItem = listView.SelectedItems[0];
-            Song modifiedSong = (Song)modifiedItem.Tag;
-            manageSongForm = new SongManagerForm(modifiedSong);
+            manageSongForm = new SongManagerForm((Song)modifiedItem.Tag);
 
             if (manageSongForm.ShowDialog() == DialogResult.OK)
             {
@@ -130,6 +149,42 @@ namespace PAIN_YoMusic_Forms
         {
             if (listView.SelectedItems.Count == 0)
                 deleteToolStripMenuItem.Enabled = modifyToolStripMenuItem.Enabled = false;
+        }
+
+        private void afterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            afterToolStripMenuItem.Checked = (afterToolStripMenuItem.Checked) ? false : true;
+
+            if (beforeToolStripMenuItem.Checked)
+                beforeToolStripMenuItem.CheckState = CheckState.Unchecked;
+
+            listView.Items.Clear();
+            if (!afterToolStripMenuItem.Checked && !beforeToolStripMenuItem.Checked)
+            {
+                LoadWholeList();
+            }
+            else
+            {
+                LoadFilteredList(false);
+            }
+        }
+
+        private void beforeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            beforeToolStripMenuItem.Checked = (beforeToolStripMenuItem.Checked) ? false : true;
+
+            if (afterToolStripMenuItem.Checked)
+                afterToolStripMenuItem.CheckState = CheckState.Unchecked;
+
+            listView.Items.Clear();
+            if (!afterToolStripMenuItem.Checked && !beforeToolStripMenuItem.Checked)
+            {
+                LoadWholeList();
+            }
+            else
+            {
+                LoadFilteredList(true);
+            }
         }
     }
 }

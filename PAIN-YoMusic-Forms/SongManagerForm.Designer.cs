@@ -35,13 +35,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.authorBox = new System.Windows.Forms.TextBox();
             this.titleBox = new System.Windows.Forms.TextBox();
-            this.dateBox = new System.Windows.Forms.MaskedTextBox();
             this.buttonAccept = new System.Windows.Forms.Button();
             this.categoryBox = new System.Windows.Forms.TextBox();
-            this.categoryChooserControl = new PAIN_YoMusic_Forms.CategoryChooserControl();
             this.errorPrompt = new System.Windows.Forms.ErrorProvider(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.categoryChooserControl)).BeginInit();
+            this.dateBox = new System.Windows.Forms.DateTimePicker();
+            this.categoryChooserControl = new PAIN_YoMusic_Forms.CategoryChooserControl();
             ((System.ComponentModel.ISupportInitialize)(this.errorPrompt)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.categoryChooserControl)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -92,15 +92,6 @@
             this.titleBox.Validating += new System.ComponentModel.CancelEventHandler(this.titleBox_Validating);
             this.titleBox.Validated += new System.EventHandler(this.titleBox_Validated);
             // 
-            // dateBox
-            // 
-            this.dateBox.Location = new System.Drawing.Point(12, 140);
-            this.dateBox.Mask = "00/00/0000";
-            this.dateBox.Name = "dateBox";
-            this.dateBox.Size = new System.Drawing.Size(185, 20);
-            this.dateBox.TabIndex = 3;
-            this.dateBox.ValidatingType = typeof(System.DateTime);
-            // 
             // buttonAccept
             // 
             this.buttonAccept.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
@@ -122,6 +113,17 @@
             this.categoryBox.Text = "Pop";
             this.categoryBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // errorPrompt
+            // 
+            this.errorPrompt.ContainerControl = this;
+            // 
+            // dateBox
+            // 
+            this.dateBox.Location = new System.Drawing.Point(12, 140);
+            this.dateBox.Name = "dateBox";
+            this.dateBox.Size = new System.Drawing.Size(185, 20);
+            this.dateBox.TabIndex = 7;
+            // 
             // categoryChooserControl
             // 
             this.categoryChooserControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -135,19 +137,15 @@
             this.categoryChooserControl.TabStop = false;
             this.categoryChooserControl.Click += new System.EventHandler(this.categoryChooserControl_Click);
             // 
-            // errorPrompt
-            // 
-            this.errorPrompt.ContainerControl = this;
-            // 
             // SongManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 220);
+            this.Controls.Add(this.dateBox);
             this.Controls.Add(this.categoryChooserControl);
             this.Controls.Add(this.categoryBox);
             this.Controls.Add(this.buttonAccept);
-            this.Controls.Add(this.dateBox);
             this.Controls.Add(this.titleBox);
             this.Controls.Add(this.authorBox);
             this.Controls.Add(this.label3);
@@ -157,8 +155,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Manage Song";
             this.Load += new System.EventHandler(this.SongManagerForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.categoryChooserControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorPrompt)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.categoryChooserControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -171,10 +169,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox authorBox;
         private System.Windows.Forms.TextBox titleBox;
-        private System.Windows.Forms.MaskedTextBox dateBox;
         private System.Windows.Forms.Button buttonAccept;
         private System.Windows.Forms.TextBox categoryBox;
         private CategoryChooserControl categoryChooserControl;
         private System.Windows.Forms.ErrorProvider errorPrompt;
+        private System.Windows.Forms.DateTimePicker dateBox;
     }
 }

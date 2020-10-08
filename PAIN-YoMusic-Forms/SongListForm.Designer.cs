@@ -37,7 +37,9 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.filterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.afterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.beforeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripList.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +56,7 @@
             this.listView.Location = new System.Drawing.Point(0, 0);
             this.listView.MultiSelect = false;
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(584, 411);
+            this.listView.Size = new System.Drawing.Size(622, 411);
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
@@ -74,7 +76,7 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Date of release";
-            this.columnHeader3.Width = 101;
+            this.columnHeader3.Width = 160;
             // 
             // columnHeader4
             // 
@@ -87,10 +89,10 @@
             this.addToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.modifyToolStripMenuItem,
-            this.toolStripComboBox1});
+            this.filterToolStripMenuItem});
             this.menuStripList.Location = new System.Drawing.Point(0, 0);
             this.menuStripList.Name = "menuStripList";
-            this.menuStripList.Size = new System.Drawing.Size(584, 27);
+            this.menuStripList.Size = new System.Drawing.Size(584, 24);
             this.menuStripList.TabIndex = 1;
             this.menuStripList.Text = "menuStrip1";
             this.menuStripList.Visible = false;
@@ -118,21 +120,34 @@
             this.modifyToolStripMenuItem.Text = "Modify";
             this.modifyToolStripMenuItem.Click += new System.EventHandler(this.modifyToolStripMenuItem_Click);
             // 
-            // toolStripComboBox1
+            // filterToolStripMenuItem
             // 
-            this.toolStripComboBox1.Items.AddRange(new object[] {
-            "All",
-            ">= 2000",
-            "< 2000"});
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
-            this.toolStripComboBox1.Text = "-- sort --";
+            this.filterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.afterToolStripMenuItem,
+            this.beforeToolStripMenuItem});
+            this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
+            this.filterToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.filterToolStripMenuItem.Text = "Filter Songs";
+            // 
+            // afterToolStripMenuItem
+            // 
+            this.afterToolStripMenuItem.Name = "afterToolStripMenuItem";
+            this.afterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.afterToolStripMenuItem.Text = "After 2000";
+            this.afterToolStripMenuItem.Click += new System.EventHandler(this.afterToolStripMenuItem_Click);
+            // 
+            // beforeToolStripMenuItem
+            // 
+            this.beforeToolStripMenuItem.Name = "beforeToolStripMenuItem";
+            this.beforeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.beforeToolStripMenuItem.Text = "Before 2000";
+            this.beforeToolStripMenuItem.Click += new System.EventHandler(this.beforeToolStripMenuItem_Click);
             // 
             // SongListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 411);
+            this.ClientSize = new System.Drawing.Size(622, 411);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.menuStripList);
             this.MainMenuStrip = this.menuStripList;
@@ -160,6 +175,8 @@
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modifyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
+        private System.Windows.Forms.ToolStripMenuItem filterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem afterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem beforeToolStripMenuItem;
     }
 }
