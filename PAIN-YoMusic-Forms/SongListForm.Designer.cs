@@ -37,6 +37,7 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.menuStripList.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,10 +86,11 @@
             this.menuStripList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addToolStripMenuItem,
             this.deleteToolStripMenuItem,
-            this.modifyToolStripMenuItem});
+            this.modifyToolStripMenuItem,
+            this.toolStripComboBox1});
             this.menuStripList.Location = new System.Drawing.Point(0, 0);
             this.menuStripList.Name = "menuStripList";
-            this.menuStripList.Size = new System.Drawing.Size(584, 24);
+            this.menuStripList.Size = new System.Drawing.Size(584, 27);
             this.menuStripList.TabIndex = 1;
             this.menuStripList.Text = "menuStrip1";
             this.menuStripList.Visible = false;
@@ -114,6 +116,17 @@
             this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
             this.modifyToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.modifyToolStripMenuItem.Text = "Modify";
+            this.modifyToolStripMenuItem.Click += new System.EventHandler(this.modifyToolStripMenuItem_Click);
+            // 
+            // toolStripComboBox1
+            // 
+            this.toolStripComboBox1.Items.AddRange(new object[] {
+            "All",
+            ">= 2000",
+            "< 2000"});
+            this.toolStripComboBox1.Name = "toolStripComboBox1";
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
+            this.toolStripComboBox1.Text = "-- sort --";
             // 
             // SongListForm
             // 
@@ -147,5 +160,6 @@
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modifyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
     }
 }

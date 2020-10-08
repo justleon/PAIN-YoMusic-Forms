@@ -26,14 +26,47 @@ namespace PAIN_YoMusic_Forms
             initView.MdiParent = this;
             viewList.Add(initView);
             initView.Show();
-            this.LayoutMdi(MdiLayout.TileHorizontal);
+            LayoutMdi(MdiLayout.TileHorizontal);
         }
 
         public void AddNewSongToList(Song song) { songList.Add(song); }
+        public List<Song> GetSongList() { return songList; }
+        public int GetOpenViews() { return viewList.Count; }
+        public void UpdateToolStripLabel(int num) { toolStripStatusLabel.Text = "Elements: " + num;  }
+        public void RemoveView(SongListForm songList) { viewList.Remove(songList); }
 
-        public int GetOpenViews() { return this.viewList.Count; }
-        
-        public void RemoveView(SongListForm songList) { this.viewList.Remove(songList); }
+        public void UpdateExistingViews(Song song)
+        {
+            foreach(SongListForm listView in viewList)
+            {
+                listView.AddSongToTheView(song);
+            }
+
+            AddNewSongToList(song);
+        }
+
+        public void UpdateSongInViews(ListViewItem modifiedItem)
+        {
+            foreach(SongListForm listView in viewList)
+            {
+                listView.ModifySongOnList(modifiedItem);
+            }
+        }
+
+        public void UpdateSongGlobally(ListViewItem modifiedItem)
+        {
+            foreach(Song song in songList)
+            {
+                if(song == modifiedItem.Tag)
+                {
+                    song.title = modifiedItem.SubItems[0].Text;
+                    song.author = modifiedItem.SubItems[1].Text;
+                    song.dateTime = modifiedItem.SubItems[2].Text;
+                    song.category = modifiedItem.SubItems[3].Text;
+                    break;
+                }
+            }
+        }
 
         private void optionNew_Click(object sender, EventArgs e)
         {
@@ -47,19 +80,19 @@ namespace PAIN_YoMusic_Forms
         {
             if (MessageBox.Show("Are you sure to exit the program?", "Exit", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                this.Close();
+                Close();
                 Application.Exit();
             }
         }
 
         private void optionTileHorizontally_Click(object sender, EventArgs e)
         {
-            this.LayoutMdi(MdiLayout.TileHorizontal);
+            LayoutMdi(MdiLayout.TileHorizontal);
         }
 
         private void optionTileVertically_Click(object sender, EventArgs e)
         {
-            this.LayoutMdi(MdiLayout.TileVertical);
+            LayoutMdi(MdiLayout.TileVertical);
         }
     }
 }

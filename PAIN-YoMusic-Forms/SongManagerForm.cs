@@ -45,16 +45,16 @@ namespace PAIN_YoMusic_Forms
             }
         }
 
-        private void buttonAccept_Click(object sender, EventArgs e)
-        {
-            if (ValidateChildren())
-                DialogResult = DialogResult.OK;
-        }
-
         public string[] GetData()
         {
             string[] data = { titleBox.Text, authorBox.Text, dateBox.Text, categoryBox.Text };
             return data;
+        }
+
+        private void buttonAccept_Click(object sender, EventArgs e)
+        {
+            if (ValidateChildren())
+                DialogResult = DialogResult.OK;
         }
 
         private void categoryChooserControl_Click(object sender, EventArgs e)
@@ -67,13 +67,13 @@ namespace PAIN_YoMusic_Forms
             if (titleBox.Text.Equals(""))
             {
                 e.Cancel = true;
-                this.errorPrompt.SetError(titleBox, "This field can't be empty!");
+                errorPrompt.SetError(titleBox, "This field can't be empty!");
             }
         }
 
         private void titleBox_Validated(object sender, EventArgs e)
         {
-            this.errorPrompt.SetError(titleBox, "");
+            errorPrompt.SetError(titleBox, "");
         }
 
         private void authorBox_Validating(object sender, CancelEventArgs e)
@@ -81,13 +81,13 @@ namespace PAIN_YoMusic_Forms
             if (authorBox.Text.Equals(""))
             {
                 e.Cancel = true;
-                this.errorPrompt.SetError(authorBox, "This field can't be empty!");
+                errorPrompt.SetError(authorBox, "This field can't be empty!");
             }
         }
 
         private void authorBox_Validated(object sender, EventArgs e)
         {
-            this.errorPrompt.SetError(authorBox, "");
+            errorPrompt.SetError(authorBox, "");
         }
     }
 }

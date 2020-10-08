@@ -14,17 +14,16 @@ namespace PAIN_YoMusic_Forms
     {
         MainForm mainForm;
         SongManagerForm manageSongForm;
-        List<Song> songList;
 
         public SongListForm(MainForm mainForm, List<Song> songList)
         {
             InitializeComponent();
             this.mainForm = mainForm;
-            this.songList = songList.ConvertAll(song => new Song(song.title, song.author, song.dateTime, song.category)); //creates deep copy of the main song list
         }
 
         private void SongListForm_Load(object sender, EventArgs e)
         {
+            List<Song> songList = mainForm.GetSongList();
             if (songList.Count() != 0)
             {
                 foreach (Song song in songList)
@@ -33,6 +32,29 @@ namespace PAIN_YoMusic_Forms
                     ListViewItem viewItem = new ListViewItem(row);
                     viewItem.Tag = song;
                     listView.Items.Add(viewItem);
+                }
+            }
+        }
+
+        public void AddSongToTheView(Song song)
+        {
+            string[] row = { song.title, song.author, song.dateTime, song.category };
+            ListViewItem viewItem = new ListViewItem(row);
+            viewItem.Tag = song;
+            listView.Items.Add(viewItem);
+        }
+
+        public void ModifySongOnList(ListViewItem song)
+        {
+            foreach(ListViewItem item in listView.Items)
+            {
+                if(item.Tag == song.Tag)
+                {
+                    item.SubItems[0].Text = song.SubItems[0].Text;
+                    item.SubItems[1].Text = song.SubItems[1].Text;
+                    item.SubItems[2].Text = song.SubItems[2].Text;
+                    item.SubItems[3].Text = song.SubItems[3].Text;
+                    break;
                 }
             }
         }
@@ -47,13 +69,13 @@ namespace PAIN_YoMusic_Forms
 
         private void SongListForm_Activated(object sender, EventArgs e)
         {
-            this.menuStripList.AllowMerge = true;
-            mainForm.toolStripStatusLabel.Text = "Elements: " + songList.Count.ToString();
+            menuStripList.AllowMerge = true;
+            mainForm.UpdateToolStripLabel(listView.Items.Count);
         }
 
         private void SongListForm_Deactivate(object sender, EventArgs e)
         {
-            this.menuStripList.AllowMerge = false;
+            menuStripList.AllowMerge = false;
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
@@ -62,29 +84,41 @@ namespace PAIN_YoMusic_Forms
             if(manageSongForm.ShowDialog() == DialogResult.OK)
             {
                 Song newSong = new Song(manageSongForm.GetData());
-                this.songList.Add(newSong);
-
-                string[] row = { newSong.title, newSong.author, newSong.dateTime, newSong.category };
-                ListViewItem viewItem = new ListViewItem(row);
-                viewItem.Tag = newSong;
-                listView.Items.Add(viewItem);
-                mainForm.AddNewSongToList(newSong);
+                mainForm.UpdateExistingViews(newSong);
+                mainForm.UpdateToolStripLabel(listView.Items.Count);
             }
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Are you sure you want to delete this item from the list?", "Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if(MessageBox.Show("Are you sure you want to delete this item from the list view?", "Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 ListViewItem selectedItem = listView.SelectedItems[0];
                 Song selectedSong = (Song)selectedItem.Tag;
-
                 listView.Items.Remove(selectedItem);
-                songList.Remove(selectedSong);
+                mainForm.UpdateToolStripLabel(listView.Items.Count);
 
-                MessageBox.Show("Successfully removed " + selectedSong.title + " from the list!", "Success");
+                MessageBox.Show("Successfully removed \"" + selectedSong.title + "\" from the list!", "Success");
             }
             
+        }
+
+        private void modifyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListViewItem modifiedItem = listView.SelectedItems[0];
+            Song modifiedSong = (Song)modifiedItem.Tag;
+            manageSongForm = new SongManagerForm(modifiedSong);
+
+            if (manageSongForm.ShowDialog() == DialogResult.OK)
+            {
+                string[] newData = manageSongForm.GetData();
+                modifiedItem.SubItems[0].Text = newData[0];
+                modifiedItem.SubItems[1].Text = newData[1];
+                modifiedItem.SubItems[2].Text = newData[2];
+                modifiedItem.SubItems[3].Text = newData[3];
+                mainForm.UpdateSongInViews(modifiedItem);
+                mainForm.UpdateSongGlobally(modifiedItem);
+            }
         }
 
         private void listView_ItemActivate(object sender, EventArgs e)
