@@ -13,18 +13,22 @@ namespace PAIN_YoMusic_Forms
 {
     public partial class SongListForm : Form
     {
-        MainForm mainForm;
+        Document document;
         SongManagerForm manageSongForm;
 
-        public SongListForm(MainForm mainForm, List<Song> songList)
+        public SongListForm(Document document)
         {
             InitializeComponent();
-            this.mainForm = mainForm;
+            this.document = document;
+
+            document.AddSongToList += AddSongToTheView;
+            document.DeleteSongFromList += DeleteSongFromTheView;
+            document.ModifySongOnList += ModifySongOnList;
         }
 
         private void SongListForm_Load(object sender, EventArgs e)
         {
-            List<Song> songList = mainForm.GetSongList();
+            List<Song> songList = document.GetSongList();
             if (songList.Count() != 0)
                 LoadWholeList();
         }
@@ -35,6 +39,20 @@ namespace PAIN_YoMusic_Forms
             ListViewItem viewItem = new ListViewItem(row);
             viewItem.Tag = song;
             listView.Items.Add(viewItem);
+            UpdateToolStripLabel(listView.Items.Count);
+        }
+
+        public void DeleteSongFromTheView(ListViewItem song)
+        {
+            foreach (ListViewItem item in listView.Items)
+            {
+                if (item.Tag == song.Tag)
+                {
+                    listView.Items.Remove(item);
+                    break;
+                }
+            }
+            UpdateToolStripLabel(listView.Items.Count);
         }
 
         public void ModifySongOnList(ListViewItem song)
@@ -50,22 +68,24 @@ namespace PAIN_YoMusic_Forms
                     break;
                 }
             }
+            UpdateToolStripLabel(listView.Items.Count);
         }
 
         public void LoadWholeList()
         {
-            foreach (Song song in mainForm.GetSongList())
+            foreach (Song song in document.GetSongList())
             {
                 string[] row = { song.title, song.author, song.dateTime, song.category };
                 ListViewItem viewItem = new ListViewItem(row);
                 viewItem.Tag = song;
                 listView.Items.Add(viewItem);
             }
+            UpdateToolStripLabel(listView.Items.Count);
         }
 
         public void LoadFilteredList(bool beforeDate)
         {
-            foreach(Song song in mainForm.GetSongList())
+            foreach(Song song in document.GetSongList())
             {
                 var date = DateTime.Parse(song.dateTime);
 
@@ -77,25 +97,22 @@ namespace PAIN_YoMusic_Forms
                 viewItem.Tag = song;
                 listView.Items.Add(viewItem);
             }
+            UpdateToolStripLabel(listView.Items.Count);
         }
 
-        private void check_form_closure(object sender, FormClosingEventArgs e)
+        public void UpdateToolStripLabel(int num)
         {
-            if (mainForm.GetOpenViews() <= 1 && e.CloseReason != CloseReason.MdiFormClosing)
-                e.Cancel = true;
-            else
-                mainForm.RemoveView(sender as SongListForm);
+            toolStripStatusLabel.Text = "Elements: " + num;
         }
 
         private void SongListForm_Activated(object sender, EventArgs e)
         {
-            menuStripList.AllowMerge = true;
-            mainForm.UpdateToolStripLabel(listView.Items.Count);
+            menuStripList.AllowMerge = statusStripList.AllowMerge = true;
         }
 
         private void SongListForm_Deactivate(object sender, EventArgs e)
         {
-            menuStripList.AllowMerge = false;
+            menuStripList.AllowMerge = statusStripList.AllowMerge = false;
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
@@ -104,21 +121,18 @@ namespace PAIN_YoMusic_Forms
             if(manageSongForm.ShowDialog() == DialogResult.OK)
             {
                 Song newSong = new Song(manageSongForm.GetData());
-                mainForm.UpdateExistingViews(newSong);
-                mainForm.UpdateToolStripLabel(listView.Items.Count);
+                document.AddSong(newSong);
             }
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Are you sure you want to delete this item from the list view?", "Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure you want to delete this item from the list view?", "Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 ListViewItem selectedItem = listView.SelectedItems[0];
-                Song selectedSong = (Song)selectedItem.Tag;
-                listView.Items.Remove(selectedItem);
-                mainForm.UpdateToolStripLabel(listView.Items.Count);
+                document.DeleteSong(selectedItem);
 
-                MessageBox.Show("Successfully removed \"" + selectedSong.title + "\" from the list!", "Success");
+                MessageBox.Show("Successfully removed \"" + selectedItem.SubItems[0].Text + "\" from the list!", "Success");
             }
             
         }
@@ -135,8 +149,7 @@ namespace PAIN_YoMusic_Forms
                 modifiedItem.SubItems[1].Text = newData[1];
                 modifiedItem.SubItems[2].Text = newData[2];
                 modifiedItem.SubItems[3].Text = newData[3];
-                mainForm.UpdateSongInViews(modifiedItem);
-                mainForm.UpdateSongGlobally(modifiedItem);
+                document.UpdateSong(modifiedItem);
             }
         }
 

@@ -56,6 +56,11 @@ namespace PAIN_YoMusic_Forms
             if (ValidateChildren())
                 DialogResult = DialogResult.OK;
         }
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
 
         private void categoryChooserControl_Click(object sender, EventArgs e)
         {
@@ -64,7 +69,7 @@ namespace PAIN_YoMusic_Forms
 
         private void titleBox_Validating(object sender, CancelEventArgs e)
         {
-            if (titleBox.Text.Equals(""))
+            if (titleBox.Text.Equals("") && buttonCancel.Focused == false)
             {
                 e.Cancel = true;
                 errorPrompt.SetError(titleBox, "This field can't be empty!");
@@ -78,7 +83,7 @@ namespace PAIN_YoMusic_Forms
 
         private void authorBox_Validating(object sender, CancelEventArgs e)
         {
-            if (authorBox.Text.Equals(""))
+            if (authorBox.Text.Equals("") && buttonCancel.Focused == false)
             {
                 e.Cancel = true;
                 errorPrompt.SetError(authorBox, "This field can't be empty!");

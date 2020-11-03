@@ -53,6 +53,7 @@
       <DependentUpon>CategoryChooserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="CategoryChooserEditor.cs" />
+    <Compile Include="Document.cs" />
     <Compile Include="SongManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -28,7 +28,7 @@ namespace PAIN_YoMusic_Forms
             get { return categoryChosen; }
             set {
                 categoryChosen = value;
-                this.Image = imageArray[(int)value];
+                Image = imageArray[(int)value];
             }
         }
 
@@ -36,8 +36,8 @@ namespace PAIN_YoMusic_Forms
         {
             InitializeComponent();
             categoryChosen = Categories.Pop;
-            this.Image = imageArray[(int)categoryChosen];
-            this.Click += CategoryChooserControl_Click;
+            Image = imageArray[(int)categoryChosen];
+            Click += CategoryChooserControl_Click;
         }
 
         public override string ToString()

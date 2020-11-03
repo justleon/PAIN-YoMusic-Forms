@@ -40,7 +40,10 @@
             this.filterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.afterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.beforeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStripList = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStripList.SuspendLayout();
+            this.statusStripList.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView
@@ -76,7 +79,7 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Date of release";
-            this.columnHeader3.Width = 160;
+            this.columnHeader3.Width = 140;
             // 
             // columnHeader4
             // 
@@ -92,7 +95,7 @@
             this.filterToolStripMenuItem});
             this.menuStripList.Location = new System.Drawing.Point(0, 0);
             this.menuStripList.Name = "menuStripList";
-            this.menuStripList.Size = new System.Drawing.Size(584, 24);
+            this.menuStripList.Size = new System.Drawing.Size(622, 24);
             this.menuStripList.TabIndex = 1;
             this.menuStripList.Text = "menuStrip1";
             this.menuStripList.Visible = false;
@@ -132,22 +135,39 @@
             // afterToolStripMenuItem
             // 
             this.afterToolStripMenuItem.Name = "afterToolStripMenuItem";
-            this.afterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.afterToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.afterToolStripMenuItem.Text = "After 2000";
             this.afterToolStripMenuItem.Click += new System.EventHandler(this.afterToolStripMenuItem_Click);
             // 
             // beforeToolStripMenuItem
             // 
             this.beforeToolStripMenuItem.Name = "beforeToolStripMenuItem";
-            this.beforeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.beforeToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.beforeToolStripMenuItem.Text = "Before 2000";
             this.beforeToolStripMenuItem.Click += new System.EventHandler(this.beforeToolStripMenuItem_Click);
+            // 
+            // statusStripList
+            // 
+            this.statusStripList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel});
+            this.statusStripList.Location = new System.Drawing.Point(0, 389);
+            this.statusStripList.Name = "statusStripList";
+            this.statusStripList.Size = new System.Drawing.Size(622, 22);
+            this.statusStripList.TabIndex = 2;
+            this.statusStripList.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(67, 17);
+            this.toolStripStatusLabel.Text = "Elements: 0";
             // 
             // SongListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(622, 411);
+            this.Controls.Add(this.statusStripList);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.menuStripList);
             this.MainMenuStrip = this.menuStripList;
@@ -155,10 +175,11 @@
             this.Text = "List View";
             this.Activated += new System.EventHandler(this.SongListForm_Activated);
             this.Deactivate += new System.EventHandler(this.SongListForm_Deactivate);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.check_form_closure);
             this.Load += new System.EventHandler(this.SongListForm_Load);
             this.menuStripList.ResumeLayout(false);
             this.menuStripList.PerformLayout();
+            this.statusStripList.ResumeLayout(false);
+            this.statusStripList.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,5 +199,7 @@
         private System.Windows.Forms.ToolStripMenuItem filterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem afterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem beforeToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip statusStripList;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
     }
 }
