@@ -13,13 +13,12 @@ namespace PAIN_YoMusic_Forms
 {
     public partial class SongListForm : Form
     {
-        Document document;
-        SongManagerForm manageSongForm;
+        private Document Document;
 
         public SongListForm(Document document)
         {
             InitializeComponent();
-            this.document = document;
+            Document = document;
 
             document.AddSongToList += AddSongToTheView;
             document.DeleteSongFromList += DeleteSongFromTheView;
@@ -28,176 +27,171 @@ namespace PAIN_YoMusic_Forms
 
         private void SongListForm_Load(object sender, EventArgs e)
         {
-            List<Song> songList = document.GetSongList();
-            if (songList.Count() != 0)
-                LoadWholeList();
+            if (Document.GetSongList().Count != 0)
+                UpdateList();
         }
 
         public void AddSongToTheView(Song song)
         {
-            string[] row = { song.title, song.author, song.dateTime, song.category };
-            ListViewItem viewItem = new ListViewItem(row);
-            viewItem.Tag = song;
-            listView.Items.Add(viewItem);
-            UpdateToolStripLabel(listView.Items.Count);
+            if (!SongFilter(song)) return;
+            UpdateList();
+            UpdateToolStripLabel();
         }
 
-        public void DeleteSongFromTheView(ListViewItem song)
+        public void DeleteSongFromTheView(Song song)
         {
             foreach (ListViewItem item in listView.Items)
             {
-                if (item.Tag == song.Tag)
+                if (item.Tag == song)
                 {
                     listView.Items.Remove(item);
-                    break;
+                    UpdateToolStripLabel();
+                    return;
                 }
             }
-            UpdateToolStripLabel(listView.Items.Count);
         }
 
-        public void ModifySongOnList(ListViewItem song)
+        public void ModifySongOnList(Song song)
         {
             foreach(ListViewItem item in listView.Items)
             {
-                if(item.Tag == song.Tag)
+                if (item.Tag == song)
                 {
-                    item.SubItems[0].Text = song.SubItems[0].Text;
-                    item.SubItems[1].Text = song.SubItems[1].Text;
-                    item.SubItems[2].Text = song.SubItems[2].Text;
-                    item.SubItems[3].Text = song.SubItems[3].Text;
-                    break;
+                    if (!SongFilter(song))
+                    {
+                        listView.Items.Remove(item);
+                        UpdateToolStripLabel();
+                    }
+                    else
+                    {
+                        item.SubItems[0].Text = song.title;
+                        item.SubItems[1].Text = song.author;
+                        item.SubItems[2].Text = song.dateTime.ToShortDateString();
+                        item.SubItems[3].Text = song.category.ToString();
+                    }
+                    return;
                 }
             }
-            UpdateToolStripLabel(listView.Items.Count);
+
+            if (SongFilter(song))
+            {
+                UpdateList();
+                UpdateToolStripLabel();
+            }
         }
 
-        public void LoadWholeList()
+        private void UpdateList()
         {
-            foreach (Song song in document.GetSongList())
+            listView.Items.Clear();
+            foreach(Song song in Filter(Document.GetSongList()))
             {
-                string[] row = { song.title, song.author, song.dateTime, song.category };
-                ListViewItem viewItem = new ListViewItem(row);
+                ListViewItem viewItem = new ListViewItem();
                 viewItem.Tag = song;
+                UpdateItem(viewItem);
                 listView.Items.Add(viewItem);
             }
-            UpdateToolStripLabel(listView.Items.Count);
+            UpdateToolStripLabel();
         }
 
-        public void LoadFilteredList(bool beforeDate)
+        private void UpdateItem(ListViewItem item)
         {
-            foreach(Song song in document.GetSongList())
+            Song song = (Song)item.Tag;
+            while (item.SubItems.Count < 4)
+                item.SubItems.Add(new ListViewItem.ListViewSubItem());
+            item.SubItems[0].Text = song.title;
+            item.SubItems[1].Text = song.author;
+            item.SubItems[2].Text = song.dateTime.ToShortDateString();
+            item.SubItems[3].Text = song.category.ToString();
+        }
+
+        private void UpdateToolStripLabel()
+        {
+            toolStripStatusLabel.Text = "Elements: " + listView.Items.Count;
+        }
+
+        private bool SongFilter(Song song)
+        {
+            switch (toolStripFilter.Text)
             {
-                var date = DateTime.Parse(song.dateTime);
-
-                if ((date.Year < 2000 && beforeDate == false) || (date.Year >= 2000 && beforeDate))
-                    continue;
-
-                string[] row = { song.title, song.author, song.dateTime, song.category };
-                ListViewItem viewItem = new ListViewItem(row);
-                viewItem.Tag = song;
-                listView.Items.Add(viewItem);
+                case "Before 2000":
+                    return song.dateTime.Year < 2000;
+                case "After 2000":
+                    return song.dateTime.Year >= 2000;
+                default:
+                    return true;
             }
-            UpdateToolStripLabel(listView.Items.Count);
         }
 
-        public void UpdateToolStripLabel(int num)
+        private List<Song> Filter(List<Song> songList)
         {
-            toolStripStatusLabel.Text = "Elements: " + num;
+            return songList.Where(SongFilter).ToList();
         }
 
         private void SongListForm_Activated(object sender, EventArgs e)
         {
-            menuStripList.AllowMerge = statusStripList.AllowMerge = true;
+            ToolStripManager.Merge(statusStrip, ((MainForm)MdiParent).statusStrip);
+            ToolStripManager.Merge(toolStrip, ((MainForm)MdiParent).toolStripTop);
         }
 
         private void SongListForm_Deactivate(object sender, EventArgs e)
         {
-            menuStripList.AllowMerge = statusStripList.AllowMerge = false;
+            ToolStripManager.RevertMerge(((MainForm)MdiParent).statusStrip, statusStrip);
+            ToolStripManager.RevertMerge(((MainForm)MdiParent).toolStripTop, toolStrip);
         }
 
-        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AddToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            manageSongForm = new SongManagerForm(null);
+            SongManagerForm manageSongForm = new SongManagerForm(null);
             if(manageSongForm.ShowDialog() == DialogResult.OK)
             {
-                Song newSong = new Song(manageSongForm.GetData());
-                document.AddSong(newSong);
+                Song newSong = new Song(manageSongForm.GetTitle(), manageSongForm.GetAuthor(), manageSongForm.GetDate(), manageSongForm.GetCategory());
+                Document.AddSong(newSong);
             }
         }
 
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to delete this item from the list view?", "Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                ListViewItem selectedItem = listView.SelectedItems[0];
-                document.DeleteSong(selectedItem);
+                Song selectedItem = (Song)listView.SelectedItems[0].Tag;
+                Document.DeleteSong(selectedItem);
 
-                MessageBox.Show("Successfully removed \"" + selectedItem.SubItems[0].Text + "\" from the list!", "Success");
+                MessageBox.Show("Successfully removed \"" + selectedItem.title + "\" from the list!", "Success");
             }
-            
         }
 
-        private void modifyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ModifyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ListViewItem modifiedItem = listView.SelectedItems[0];
-            manageSongForm = new SongManagerForm((Song)modifiedItem.Tag);
+            Song modifiedItem = (Song)listView.SelectedItems[0].Tag;
+            SongManagerForm manageSongForm = new SongManagerForm(modifiedItem);
 
             if (manageSongForm.ShowDialog() == DialogResult.OK)
             {
-                string[] newData = manageSongForm.GetData();
-                modifiedItem.SubItems[0].Text = newData[0];
-                modifiedItem.SubItems[1].Text = newData[1];
-                modifiedItem.SubItems[2].Text = newData[2];
-                modifiedItem.SubItems[3].Text = newData[3];
-                document.UpdateSong(modifiedItem);
+                modifiedItem.title = manageSongForm.GetTitle();
+                modifiedItem.author = manageSongForm.GetAuthor();
+                modifiedItem.dateTime = manageSongForm.GetDate();
+                modifiedItem.category = manageSongForm.GetCategory();
+                Document.UpdateSong(modifiedItem);
             }
         }
 
-        private void listView_ItemActivate(object sender, EventArgs e)
-        {
-            deleteToolStripMenuItem.Enabled = modifyToolStripMenuItem.Enabled = true;
-        }
-
-        private void listView_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListView_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listView.SelectedItems.Count == 0)
+            {
                 deleteToolStripMenuItem.Enabled = modifyToolStripMenuItem.Enabled = false;
-        }
-
-        private void afterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            afterToolStripMenuItem.Checked = (afterToolStripMenuItem.Checked) ? false : true;
-
-            if (beforeToolStripMenuItem.Checked)
-                beforeToolStripMenuItem.CheckState = CheckState.Unchecked;
-
-            listView.Items.Clear();
-            if (!afterToolStripMenuItem.Checked && !beforeToolStripMenuItem.Checked)
-            {
-                LoadWholeList();
+                toolStripDeleteButton.Enabled = toolStripModifyButton.Enabled = false;
             }
             else
             {
-                LoadFilteredList(false);
+                deleteToolStripMenuItem.Enabled = modifyToolStripMenuItem.Enabled = true;
+                toolStripDeleteButton.Enabled = toolStripModifyButton.Enabled = true;
             }
         }
 
-        private void beforeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ToolStripFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            beforeToolStripMenuItem.Checked = (beforeToolStripMenuItem.Checked) ? false : true;
-
-            if (afterToolStripMenuItem.Checked)
-                afterToolStripMenuItem.CheckState = CheckState.Unchecked;
-
-            listView.Items.Clear();
-            if (!afterToolStripMenuItem.Checked && !beforeToolStripMenuItem.Checked)
-            {
-                LoadWholeList();
-            }
-            else
-            {
-                LoadFilteredList(true);
-            }
+            UpdateList();
         }
     }
 }

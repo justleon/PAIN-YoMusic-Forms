@@ -4,30 +4,24 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static PAIN_YoMusic_Forms.CategoryChooserControl;
 
 namespace PAIN_YoMusic_Forms
 {
+
     public class Song
     {
         public string title;
         public string author;
-        public string dateTime;
-        public string category;
+        public DateTime dateTime;
+        public Categories category;
 
-        public Song(string t, string a, string d, string c)
+        public Song(string title, string author, DateTime dateTime, Categories category)
         {
-            this.title = t;
-            this.author = a;
-            this.dateTime = d;
-            this.category = c;
-        }
-
-        public Song(string[] data)
-        {
-            this.title = data[0];
-            this.author = data[1];
-            this.dateTime = data[2];
-            this.category = data[3];
+            this.title = title;
+            this.author = author;
+            this.dateTime = dateTime;
+            this.category = category;
         }
     }
 }

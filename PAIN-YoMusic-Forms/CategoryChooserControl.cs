@@ -15,7 +15,6 @@ namespace PAIN_YoMusic_Forms
     public partial class CategoryChooserControl : PictureBox
     {
         public Image[] imageArray = { Properties.Resources.pop, Properties.Resources.rock, Properties.Resources.rap };
-
         public enum Categories { Pop = 0, Rock = 1, Rap = 2 };
         
         private Categories categoryChosen;

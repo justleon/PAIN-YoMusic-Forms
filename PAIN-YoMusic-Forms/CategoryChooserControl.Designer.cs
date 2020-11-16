@@ -34,8 +34,10 @@
             // CategoryChooserControl
             // 
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.InitialImage = global::PAIN_YoMusic_Forms.Properties.Resources.pop;
             this.MinimumSize = new System.Drawing.Size(64, 64);
-            this.Size = new System.Drawing.Size(128, 128);
+            this.Size = new System.Drawing.Size(100, 64);
+            this.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
 

@@ -27,28 +27,44 @@ namespace PAIN_YoMusic_Forms
             {
                 titleBox.Text = song.title;
                 authorBox.Text = song.author;
-                dateBox.Text = song.dateTime;
-                categoryBox.Text = song.category;
+                dateBox.Value = song.dateTime;
 
                 switch (song.category)
                 {
-                    case "Pop":
+                    case Categories.Pop:
                         categoryChooserControl.CategoryChosen = Categories.Pop;
+                        categoryBox.Text = "Pop";
                         break;
-                    case "Rock":
+                    case Categories.Rock:
                         categoryChooserControl.CategoryChosen = Categories.Rock;
+                        categoryBox.Text = "Rock";
                         break;
-                    case "Rap":
+                    case Categories.Rap:
                         categoryChooserControl.CategoryChosen = Categories.Rap;
+                        categoryBox.Text = "Rap";
                         break;
                 }
             }
         }
 
-        public string[] GetData()
+        public string GetAuthor()
         {
-            string[] data = { titleBox.Text, authorBox.Text, dateBox.Text, categoryBox.Text };
-            return data;
+            return authorBox.Text;
+        }
+
+        public string GetTitle()
+        {
+            return titleBox.Text;
+        }
+
+        public DateTime GetDate()
+        {
+            return dateBox.Value.Date;
+        }
+
+        public Categories GetCategory()
+        {
+            return categoryChooserControl.CategoryChosen;
         }
 
         private void buttonAccept_Click(object sender, EventArgs e)

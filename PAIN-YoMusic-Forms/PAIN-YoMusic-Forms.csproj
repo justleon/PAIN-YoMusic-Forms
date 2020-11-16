@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryChooserControl.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="CategoryChooserControl.Designer.cs">
       <DependentUpon>CategoryChooserControl.cs</DependentUpon>
@@ -111,13 +111,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pop.png" />
+    <None Include="Resources\mic.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\rap.png" />
+    <None Include="Resources\electric-guitar.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\rock.png" />
+    <None Include="Resources\boombox.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

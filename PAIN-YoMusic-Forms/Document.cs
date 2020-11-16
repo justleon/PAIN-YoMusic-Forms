@@ -12,8 +12,8 @@ namespace PAIN_YoMusic_Forms
         private List<Song> songList = new List<Song>();
 
         public event Action<Song> AddSongToList;
-        public event Action<ListViewItem> ModifySongOnList;
-        public event Action<ListViewItem> DeleteSongFromList;
+        public event Action<Song> ModifySongOnList;
+        public event Action<Song> DeleteSongFromList;
 
         public void AddSong(Song song)
         {
@@ -22,23 +22,23 @@ namespace PAIN_YoMusic_Forms
             AddSongToList?.Invoke(song);
         }
 
-        public void DeleteSong(ListViewItem song)
+        public void DeleteSong(Song song)
         {
-            songList.Remove((Song)song.Tag);
+            songList.Remove(song);
 
             DeleteSongFromList?.Invoke(song);
         }
         
-        public void UpdateSong(ListViewItem modifiedItem)
+        public void UpdateSong(Song modifiedItem)
         {
             foreach (Song song in songList)
             {
-                if (song == modifiedItem.Tag)
+                if (song == modifiedItem)
                 {
-                    song.title = modifiedItem.SubItems[0].Text;
-                    song.author = modifiedItem.SubItems[1].Text;
-                    song.dateTime = modifiedItem.SubItems[2].Text;
-                    song.category = modifiedItem.SubItems[3].Text;
+                    song.title = modifiedItem.title;
+                    song.author = modifiedItem.author;
+                    song.dateTime = modifiedItem.dateTime;
+                    song.category = modifiedItem.category;
                     break;
                 }
             }

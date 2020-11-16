@@ -28,26 +28,27 @@ namespace PAIN_YoMusic_Forms
             LayoutMdi(MdiLayout.TileHorizontal);
         }
 
-        private void optionNew_Click(object sender, EventArgs e)
+        private void OptionNew_Click(object sender, EventArgs e)
         {
             SongListForm newMdiWindow = new SongListForm(document);
             newMdiWindow.FormClosing += SongListForm_FormClosing;
             newMdiWindow.MdiParent = this;
             newMdiWindow.Show();
+            LayoutMdi(MdiLayout.TileHorizontal);
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure to exit the program?", "Exit", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 Close();
         }
 
-        private void optionTileHorizontally_Click(object sender, EventArgs e)
+        private void OptionTileHorizontally_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.TileHorizontal);
         }
 
-        private void optionTileVertically_Click(object sender, EventArgs e)
+        private void OptionTileVertically_Click(object sender, EventArgs e)
         {
             LayoutMdi(MdiLayout.TileVertical);
         }
