@@ -29,12 +29,17 @@
         private void InitializeComponent()
         {
             this.menuStripList = new System.Windows.Forms.MenuStrip();
+            this.songListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripAddButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripDeleteButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripModifyButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripFilter = new System.Windows.Forms.ToolStripComboBox();
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -46,11 +51,6 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.toolStripFilter = new System.Windows.Forms.ToolStripComboBox();
-            this.songListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripList.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -67,6 +67,39 @@
             this.menuStripList.TabIndex = 1;
             this.menuStripList.Text = "menuStrip1";
             this.menuStripList.Visible = false;
+            // 
+            // songListToolStripMenuItem
+            // 
+            this.songListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.deleteToolStripMenuItem,
+            this.modifyToolStripMenuItem});
+            this.songListToolStripMenuItem.Name = "songListToolStripMenuItem";
+            this.songListToolStripMenuItem.Size = new System.Drawing.Size(126, 20);
+            this.songListToolStripMenuItem.Text = "Song List Document";
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.addToolStripMenuItem.Text = "Add";
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.AddToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Enabled = false;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
+            // 
+            // modifyToolStripMenuItem
+            // 
+            this.modifyToolStripMenuItem.Enabled = false;
+            this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
+            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.modifyToolStripMenuItem.Text = "Modify";
+            this.modifyToolStripMenuItem.Click += new System.EventHandler(this.ModifyToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
@@ -131,6 +164,17 @@
             this.toolStripModifyButton.Text = "Modify";
             this.toolStripModifyButton.Click += new System.EventHandler(this.ModifyToolStripMenuItem_Click);
             // 
+            // toolStripFilter
+            // 
+            this.toolStripFilter.Items.AddRange(new object[] {
+            "All",
+            "After 2000",
+            "Before 2000"});
+            this.toolStripFilter.Name = "toolStripFilter";
+            this.toolStripFilter.Size = new System.Drawing.Size(121, 25);
+            this.toolStripFilter.Text = "All";
+            this.toolStripFilter.SelectedIndexChanged += new System.EventHandler(this.ToolStripFilter_SelectedIndexChanged);
+            // 
             // BottomToolStripPanel
             // 
             this.BottomToolStripPanel.Location = new System.Drawing.Point(0, 0);
@@ -182,6 +226,7 @@
             this.listView.MultiSelect = false;
             this.listView.Name = "listView";
             this.listView.Size = new System.Drawing.Size(622, 386);
+            this.listView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
@@ -215,49 +260,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(622, 25);
             this.panel1.TabIndex = 6;
-            // 
-            // toolStripFilter
-            // 
-            this.toolStripFilter.Items.AddRange(new object[] {
-            "All",
-            "After 2000",
-            "Before 2000"});
-            this.toolStripFilter.Name = "toolStripFilter";
-            this.toolStripFilter.Size = new System.Drawing.Size(121, 25);
-            this.toolStripFilter.Text = "All";
-            // 
-            // songListToolStripMenuItem
-            // 
-            this.songListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem,
-            this.deleteToolStripMenuItem,
-            this.modifyToolStripMenuItem});
-            this.songListToolStripMenuItem.Name = "songListToolStripMenuItem";
-            this.songListToolStripMenuItem.Size = new System.Drawing.Size(126, 20);
-            this.songListToolStripMenuItem.Text = "Song List Document";
-            // 
-            // addToolStripMenuItem
-            // 
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.addToolStripMenuItem.Text = "Add";
-            this.addToolStripMenuItem.Click += new System.EventHandler(this.AddToolStripMenuItem_Click);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Enabled = false;
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
-            // 
-            // modifyToolStripMenuItem
-            // 
-            this.modifyToolStripMenuItem.Enabled = false;
-            this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
-            this.modifyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.modifyToolStripMenuItem.Text = "Modify";
-            this.modifyToolStripMenuItem.Click += new System.EventHandler(this.ModifyToolStripMenuItem_Click);
             // 
             // SongListForm
             // 

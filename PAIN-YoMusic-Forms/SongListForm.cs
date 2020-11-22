@@ -14,6 +14,8 @@ namespace PAIN_YoMusic_Forms
     public partial class SongListForm : Form
     {
         private Document Document;
+        enum FilterOption { ALL, A2000, B2000 }
+        FilterOption currentFilter = FilterOption.ALL;
 
         public SongListForm(Document document)
         {
@@ -34,7 +36,7 @@ namespace PAIN_YoMusic_Forms
         public void AddSongToTheView(Song song)
         {
             if (!SongFilter(song)) return;
-            UpdateList();
+            AddItem(song);
             UpdateToolStripLabel();
         }
 
@@ -75,7 +77,7 @@ namespace PAIN_YoMusic_Forms
 
             if (SongFilter(song))
             {
-                UpdateList();
+                AddItem(song);
                 UpdateToolStripLabel();
             }
         }
@@ -85,12 +87,17 @@ namespace PAIN_YoMusic_Forms
             listView.Items.Clear();
             foreach(Song song in Filter(Document.GetSongList()))
             {
-                ListViewItem viewItem = new ListViewItem();
-                viewItem.Tag = song;
-                UpdateItem(viewItem);
-                listView.Items.Add(viewItem);
+                AddItem(song);
             }
             UpdateToolStripLabel();
+        }
+
+        private void AddItem(Song song)
+        {
+            ListViewItem viewItem = new ListViewItem();
+            viewItem.Tag = song;
+            UpdateItem(viewItem);
+            listView.Items.Add(viewItem);
         }
 
         private void UpdateItem(ListViewItem item)
@@ -111,11 +118,11 @@ namespace PAIN_YoMusic_Forms
 
         private bool SongFilter(Song song)
         {
-            switch (toolStripFilter.Text)
+            switch (currentFilter)
             {
-                case "Before 2000":
+                case FilterOption.B2000:
                     return song.dateTime.Year < 2000;
-                case "After 2000":
+                case FilterOption.A2000:
                     return song.dateTime.Year >= 2000;
                 default:
                     return true;
@@ -191,6 +198,13 @@ namespace PAIN_YoMusic_Forms
 
         private void ToolStripFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (toolStripFilter.Text.Equals("All"))
+                currentFilter = FilterOption.ALL;
+            else if (toolStripFilter.Text.Equals("Before 2000"))
+                currentFilter = FilterOption.B2000;
+            else
+                currentFilter = FilterOption.A2000;
+
             UpdateList();
         }
     }

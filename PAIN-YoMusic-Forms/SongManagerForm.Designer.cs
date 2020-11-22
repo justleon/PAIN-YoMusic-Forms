@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SongManagerForm));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -214,7 +215,7 @@
             this.categoryChooserControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.categoryChooserControl.CategoryChosen = PAIN_YoMusic_Forms.CategoryChooserControl.Categories.Pop;
             this.categoryChooserControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.categoryChooserControl.Image = global::PAIN_YoMusic_Forms.Properties.Resources.pop;
+            this.categoryChooserControl.Image = ((System.Drawing.Image)(resources.GetObject("categoryChooserControl.Image")));
             this.categoryChooserControl.InitialImage = global::PAIN_YoMusic_Forms.Properties.Resources.pop;
             this.categoryChooserControl.Location = new System.Drawing.Point(220, 3);
             this.categoryChooserControl.MinimumSize = new System.Drawing.Size(64, 64);
